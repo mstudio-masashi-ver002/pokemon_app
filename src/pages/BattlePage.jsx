@@ -3,6 +3,34 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './BattlePage.css';
+import { LinearProgress, Box, Typography } from '@mui/material';
+
+// HPバーのコンポーネント
+const HPBar = ({ hp, maxHp }) => {
+    const percentage = (hp / maxHp) * 100;
+  
+    return (
+      <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ width: '80%', mr: 1 }}>
+          <LinearProgress
+            variant="determinate"
+            value={percentage}
+            sx={{
+              height: 20,
+              borderRadius: 5,
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: percentage > 50 ? '#00cc00' : percentage > 20 ? '#ffcc00' : '#ff0000'
+              }
+            }}
+          />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="textSecondary">{`${hp} / ${maxHp}`}</Typography>
+        </Box>
+      </Box>
+    );
+  };
+  
 
 const BattlePage = () => {
   const navigate = useNavigate();
@@ -221,26 +249,29 @@ const BattlePage = () => {
   }, [turn, enemyPokemon, playerHP, isBattleEnded]);
 
   return (
-    <div className="battle-page">
+    <main className="battle">
       {isSelectingPokemon ? (
         <div>
-          <h2>使用するポケモンを選んでください：</h2>
+          <h2 className="select-pokemon-title">ポケモンを選んでくれ！</h2>
           <div className="pokemon-selection">
-            {caughtPokemon.map((pokemon, index) => (
-              <div key={index} className="pokemon-card" onClick={() => handleSelectPokemon(pokemon)}>
-                <h3>{pokemon.name}</h3>
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                  alt={pokemon.name}
-                />
-                <p>レベル: {pokemon.level}</p>
-              </div>
-            ))}
+          { [...caughtPokemon]
+    .sort((a, b) => b.level - a.level)
+    .map((pokemon, index) => (
+      <div key={index} className="pokemon-card" onClick={() => handleSelectPokemon(pokemon)}>
+        <h3>{pokemon.name}</h3>
+        <img
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+          alt={pokemon.name}
+        />
+        <p>レベル: {pokemon.level}</p>
+      </div>
+    ))}
           </div>
         </div>
       ) : (
         playerPokemon && enemyPokemon && (
           <>
+              <div className="battle-page">
             <div className="battle-arena">
               <div className="player-side">
                 <h2>{playerPokemon.name}</h2>
@@ -250,6 +281,7 @@ const BattlePage = () => {
                 />
                 <p>レベル: {playerPokemon.level}</p>
                 <p>HP: {playerHP}</p>
+                <HPBar hp={playerHP} maxHp={playerPokemon.stats.hp} />
               </div>
 
               <div className="enemy-side">
@@ -260,6 +292,7 @@ const BattlePage = () => {
                 />
                 <p>レベル: {enemyPokemon.level}</p>
                 <p>HP: {enemyHP}</p>
+                <HPBar hp={enemyHP} maxHp={enemyPokemon.stats.hp} />
               </div>
             </div>
 
@@ -270,7 +303,7 @@ const BattlePage = () => {
                   onClick={() => handlePlayerAttack(move)}
                   disabled={turn !== "player"}
                 >
-                  {move.name} (威力: {move.power || 'なし'})
+                  {move.name}
                 </button>
               ))}
             </div>
@@ -282,10 +315,12 @@ const BattlePage = () => {
                 ))}
               </ul>
             </div>
+            </div>
           </>
         )
       )}
-    </div>
+
+    </main>
   );
 };
 
