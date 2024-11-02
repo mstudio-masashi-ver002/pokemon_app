@@ -1,0 +1,252 @@
+/* BattlePage.css */
+
+/* ベーススタイル */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #ffffff;
+  }
+  
+  .battle-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-bottom: 180px; /* バトル進行状況部分を考慮 */
+  }
+  
+  .battle-arena {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0;
+  }
+  
+  .player-side, .enemy-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .player-side img, .enemy-side img {
+    width: 150px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .player-attack {
+    transform: translateX(15px);
+  }
+  
+  .enemy-attack {
+    transform: translateX(-15px);
+  }
+
+
+/* バトルログスタイル */
+.battle-log {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 15px 20px;
+    max-height: 80px; /* 最大の高さを設定 */
+    overflow-y: auto; /* コンテンツが多くなったらスクロールバーを表示 */
+    z-index: 1000;
+    font-size: 0.9em;
+    border-top: 2px solid #ff4b2b;
+  }
+  
+  .battle-log ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .battle-log ul li {
+    margin-bottom: 8px;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  
+  /* 技リストのスタイル */
+  .move-selection {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    padding: 15px;
+    border-radius: 10px;
+    width: 180px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  .move-selection button {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 6px 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-size: 0.8em;
+  }
+  
+  .move-selection button:hover {
+    box-shadow: 0px 0px 15px #ff4b2b;
+    transform: scale(1.05);
+  }
+  
+  .move-selection button:disabled {
+    background: #777;
+    cursor: not-allowed;
+  }
+  
+  /* モバイル用のレスポンシブデザイン */
+  @media (max-width: 768px) {
+    .battle-page {
+      padding-bottom: 220px;
+    }
+  
+    .battle-arena {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .player-side, .enemy-side {
+      width: 45%;
+      margin-bottom: 20px;
+    }
+  
+    .player-side img, .enemy-side img {
+      width: 100px;
+    }
+  
+    .battle-log {
+      font-size: 0.8em;
+      padding: 10px 15px;
+    }
+  
+    .move-selection {
+      width: 150px;
+      right: 5px;
+      top: initial;
+      bottom: 14px;
+    }
+  
+    .move-selection button {
+      width: 90%;
+      margin: 4px;
+      padding: 6px 8px;
+    }
+  }
+  
+  /* アニメーション */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  /* ボタン押下時のアニメーション */
+  button:active {
+    transform: scale(0.95);
+  }
+  
+
+
+  .pokemon-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .pokemon-card {
+    background: linear-gradient(145deg, #fef6e4, #fff9eb);
+    border: 2px solid #fbcf6e;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 150px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .pokemon-card::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 229, 153, 0.3) 20%, transparent 20%);
+    background-size: 50px 50px;
+    animation: floatBackground 5s linear infinite;
+    z-index: -1;
+  }
+  
+  @keyframes floatBackground {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(-50px, -50px);
+    }
+  }
+  
+  .pokemon-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pokemon-card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .pokemon-card img {
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s;
+    animation: bounce 2s infinite ease-in-out;
+  }
+  
+  .pokemon-card h3 {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: #ff6f61;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  
+  .pokemon-card p {
+    font-size: 1em;
+    color: #ff9a76;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  
