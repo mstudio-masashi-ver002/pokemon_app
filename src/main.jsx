@@ -3,5 +3,7 @@ import App from './App.jsx'
 import './styles/style.scss'
 
 createRoot(document.getElementById('root')).render(
-    <App />
+    <div className="sp_only">
+        <App />
+    </div>
 )

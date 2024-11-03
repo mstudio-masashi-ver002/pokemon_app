@@ -1,29 +1,214 @@
 .pokemon-selection-page {
     text-align: center;
+    background: linear-gradient(to bottom, #ffdfba, #f06d06);
+    padding: 50px;
+    color: #fff;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    min-height: 100vh;
   }
   
-  .loading-container {
+  .pokemon-selection-page .title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .pokemon-selection-page .loading-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .pokeball-loader {
+  .pokemon-selection-page .pokeball-loader {
     width: 50px;
     height: 50px;
-    border: 5px solid red;
-    border-top: 5px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+    background: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png') no-repeat center;
+    background-size: contain;
+    margin-bottom: 20px;
+  }
+  
+  .pokemon-selection-page .pokemon-display {
+    padding: 20px;
+    border-radius: 15px;
+    background: radial-gradient(circle, #ffdf6c, #ffa31a);
+    box-shadow: 0px 0px 20px rgba(255, 165, 0, 0.5);
+    display: inline-block;
+  }
+  
+  .pokemon-selection-page .pokemon-name {
+    font-size: 2rem;
     margin-bottom: 10px;
   }
   
-  @keyframes spin {
+  .pokemon-selection-page .pokemon-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .pokemon-selection-page .catch-probability {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .pokemon-selection-page .pokeball-image {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  .pokemon-selection-page .catch-button {
+    position: absolute;
+    bottom: 110px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .pokemon-selection-page .catch-button.disabled {
+    display: none;
+  }
+  .pokemon-selection-page .change-button.disabled {
+    display: none;
+  }
+  .pokemon-selection-page .catch-button .catch-button-icon{
+    margin-bottom: -6px;
+    width: 22px;
+    margin-top: 1px;
+    margin-left: -5px;
+    user-select: none;
+  }
+  .pokemon-selection-page .change-button {
+    position: absolute;
+    bottom: 110px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pokemon-selection-page .catch-button, .change-button {
+    background: linear-gradient(45deg, #ff2e63, #ff9966);
+    border: none;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    width: 112px;
+    height: 112px;
+    border-radius: 50%; /* 正円にする */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pokemon-selection-page .catch-button:hover, .pokemon-selection-page .change-button:hover {
+    background: linear-gradient(45deg, #ff9966, #ff2e63);
+    box-shadow: 0px 0px 15px rgba(255, 105, 135, 0.5);
+  }
+  
+  .pokemon-selection-page .catch-button:active, .pokemon-selection-page .change-button:active {
+    transform: scale(0.95);
+  }
+  
+
+  .pokemon-selection-page .pokeball-image.throw {
+    animation: throw-animation 0.5s ease;
+  }
+  
+
+
+  .pokemon-selection-page .pokeball-image.caught-success {
+    animation: throw-animation-get 5s ease-in-out 1, shine 1.5s ease-in-out 3; /* throw-animationは1回、shineは3回 */
+  }
+  
+  /* モンスターボールの投げる動作（上下移動＋回転＋拡大） */
+  @keyframes throw-animation {
     0% {
-      transform: rotate(0deg);
+      transform: translateY(0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translateY(-120px) rotate(360deg) scale(1.5); /* 上に移動しつつ拡大 */
     }
     100% {
-      transform: rotate(360deg);
+      transform: translateY(0) rotate(720deg) scale(1);
     }
   }
   
+  /* モンスターボールの投げる動作（上下移動＋回転＋拡大） */
+  @keyframes throw-animation-get {
+    0% {
+      transform: translateY(0) rotate(0deg) scale(1);
+    }
+    10% {
+      transform: translateY(-120px) rotate(360deg) scale(6); 
+    }
+    100% {
+      transform: translateY(0) rotate(720deg) scale(1);
+    }
+  }
+
+  /* 輝きのエフェクトのみのアニメーション */
+  @keyframes shine {
+    0% { 
+      filter: brightness(1);
+    }
+    50% { 
+      filter: brightness(1.8); /* 途中で輝きの強調 */
+    }
+    100% { 
+      filter: brightness(1);
+    }
+  }
+
+
+
+  .pokemon-selection-page .caught-animation {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pokemon-selection-page .caught-pokemon-image-sub-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .pokemon-selection-page .caught-pokemon-image-sub-container .caught-pokemon-image-sub{
+    width: 100px;
+    height: 100px;
+  }
+  .pokemon-selection-page .caught-pokemon-image {
+    width: 120px;
+    height: 120px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    animation: shine 1s ease-in-out 3;
+  }
+  
+  .pokemon-selection-page .congrats-message {
+    font-size: 1.5em;
+    color: #ffcc00;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+
+  .pokemon-selection-page .catch-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pokemon-selection-page .pokemon-name {
+    font-size: 1.6rem;
+  }
+  .pokemon-selection-page .pokemon-name small {
+    font-size: 80%;
+    color: #fff;
+  }
+

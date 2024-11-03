@@ -1,0 +1,59 @@
+/* Header.css */
+.header {
+    background-color: #a80022;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* 他の要素より前面に表示 */
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .header-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-item span {
+    margin-left: 8px;
+    font-size: 2rem;
+  }
+  
+  .user-info {
+    display: flex;
+    gap: 10px;
+  }
+  .user-gold {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 50px;
+  }
+  .user-tickets{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 50px;
+  }
+  .user-caught-pokemon {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    height: 50px;
+
+  }
+  .user-caught-pokemon span {
+    padding-top: 5px;
+    margin-left: -8px;
+    margin-right: -2px;
+  }
