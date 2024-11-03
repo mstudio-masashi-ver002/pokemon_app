@@ -5,6 +5,7 @@ main.battle {
     background: rgb(48, 98, 48);
     color: #ffffff;
     font-family: 'Press Start 2P', cursive;
+    min-height: 100vh;
 }
 .select-pokemon-title {
     text-align: center;
